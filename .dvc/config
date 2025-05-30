@@ -1,0 +1,16 @@
+['remote "storage"']
+    url = gdrive://1WVMvdjL6Q_vUD_Lb-jbEfPaDrT7pEerf
+    gdrive_acknowledge_abuse = true
+    
+['remote "local"']
+    url = /content/drive/MyDrive/dataset
+
+['core']
+    remote = local
+    
+# Alternative S3 configuration:
+# ['remote "s3storage"']
+#     url = s3://your-bucket-name
+#     endpointurl = https://your-endpoint
+#     access_key_id = your-access-key
+#     secret_access_key = your-secret-key 

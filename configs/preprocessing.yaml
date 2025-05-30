@@ -1,0 +1,27 @@
+# Preprocessing configuration
+data:
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+# Feature preprocessing options
+feature_processing:
+  one_hot_encode: true
+  normalize: true
+  handle_missing: "mean"  # Options: mean, median, mode, drop
+
+# These settings are kept for compatibility with the image processing code
+# but are not used for tabular data
+image_size:
+  width: 224
+  height: 224
+normalization:
+  mean: [0.485, 0.456, 0.406]  # Default values
+  std: [0.229, 0.224, 0.225]   # Default values
+
+augmentation:
+  horizontal_flip: true
+  vertical_flip: false
+  rotation_range: 15
+  brightness_range: [0.8, 1.2]
+  contrast_range: [0.8, 1.2] 

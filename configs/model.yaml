@@ -1,0 +1,15 @@
+# Model configuration
+architecture: "mlp"  # Using MLP for tabular data instead of CNN
+input_size: 100  # Will be updated dynamically based on actual data
+hidden_sizes: [128, 64, 32]  # Sizes of hidden layers
+num_classes: 2  # Update based on your actual number of mushroom classes (will be dynamically updated)
+dropout_rate: 0.2
+
+# Model checkpoint saving
+checkpoint:
+  dirpath: "${hydra:runtime.cwd}/models/checkpoints"
+  filename: "model-{epoch:02d}-{val_acc:.4f}"
+  monitor: "val_acc"
+  mode: "max"
+  save_top_k: 3
+  save_last: true 

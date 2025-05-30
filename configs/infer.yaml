@@ -1,0 +1,28 @@
+# Inference configuration
+model:
+  # Path to the best checkpoint saved during training
+  checkpoint_path: "${hydra:runtime.cwd}/models/checkpoints/best_model.ckpt"
+  # Alternatively, path to the exported ONNX model
+  onnx_path: "${hydra:runtime.cwd}/models/exported/model.onnx"
+  # Use ONNX model instead of PyTorch checkpoint
+  use_onnx: false
+  # Path to TensorRT engine (if converted)
+  tensorrt_path: "${hydra:runtime.cwd}/models/exported/model.engine"
+  # Use TensorRT model instead of ONNX
+  use_tensorrt: false
+  # Confidence threshold for predictions
+  confidence_threshold: 0.5
+
+inference:
+  # Batch size for processing multiple images
+  batch_size: 1
+  # Device to run inference on
+  device: "cuda:0"  # Options: "cuda:0", "cpu"
+  # Save predictions to this path
+  output_dir: "${hydra:runtime.cwd}/predictions"
+
+# Class names mapping (id to class name)
+class_names:
+  0: "mushroom_class_1"
+  1: "mushroom_class_2"
+  # Add more classes as needed 

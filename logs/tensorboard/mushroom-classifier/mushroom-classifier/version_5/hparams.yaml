@@ -1,0 +1,94 @@
+data:
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+feature_processing:
+  one_hot_encode: true
+  normalize: true
+  handle_missing: mean
+image_size:
+  width: 224
+  height: 224
+normalization:
+  mean:
+  - 0.485
+  - 0.456
+  - 0.406
+  std:
+  - 0.229
+  - 0.224
+  - 0.225
+augmentation:
+  horizontal_flip: true
+  vertical_flip: false
+  rotation_range: 15
+  brightness_range:
+  - 0.8
+  - 1.2
+  contrast_range:
+  - 0.8
+  - 1.2
+architecture: mlp
+input_size: 117
+hidden_sizes:
+- 128
+- 64
+- 32
+num_classes: 2
+dropout_rate: 0.2
+checkpoint:
+  dirpath: D:\coding projects\mushroom_classifier/models/checkpoints
+  filename: model-{epoch:02d}-{val_acc:.4f}
+  monitor: val_acc
+  mode: max
+  save_top_k: 3
+  save_last: true
+trainer:
+  max_epochs: 30
+  accelerator: auto
+  devices: 1
+  precision: 32-true
+  deterministic: true
+  gradient_clip_val: 1.0
+optimizer:
+  name: adam
+  lr: 0.001
+  weight_decay: 0.0001
+scheduler:
+  name: reduce_on_plateau
+  patience: 3
+  factor: 0.5
+  min_lr: 1.0e-06
+dataloader:
+  batch_size: 32
+  num_workers: 4
+  pin_memory: true
+early_stopping:
+  monitor: val_loss
+  patience: 7
+  mode: min
+paths:
+  data:
+    raw: D:\coding projects\mushroom_classifier/data/raw
+    processed: D:\coding projects\mushroom_classifier/data/processed
+    train: D:\coding projects\mushroom_classifier/data/processed/train
+    val: D:\coding projects\mushroom_classifier/data/processed/val
+    test: D:\coding projects\mushroom_classifier/data/processed/test
+  models:
+    checkpoints: D:\coding projects\mushroom_classifier/models/checkpoints
+    exported: D:\coding projects\mushroom_classifier/models/exported
+  logs:
+    mlflow: D:\coding projects\mushroom_classifier/logs/mlflow
+    tensorboard: D:\coding projects\mushroom_classifier/logs/tensorboard
+  plots: D:\coding projects\mushroom_classifier/plots
+mlflow:
+  experiment_name: mushroom_classifier
+  tracking_uri: http://127.0.0.1:8080
+  register_model: true
+seed: 42
+debug: false
+experiment:
+  name: mushroom-classifier
+  tags:
+    project: mushroom-classification
+    task: image-classification
