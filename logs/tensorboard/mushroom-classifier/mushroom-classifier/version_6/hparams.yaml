@@ -1,0 +1,70 @@
+paths:
+  data:
+    raw: D:\coding projects\mushroom_classifier/data/raw
+    processed: D:\coding projects\mushroom_classifier/data/processed
+    train: D:\coding projects\mushroom_classifier/data/processed/train
+    val: D:\coding projects\mushroom_classifier/data/processed/val
+    test: D:\coding projects\mushroom_classifier/data/processed/test
+  models:
+    checkpoints: D:\coding projects\mushroom_classifier/models/checkpoints
+    exported: D:\coding projects\mushroom_classifier/models/exported
+  logs:
+    tensorboard: D:\coding projects\mushroom_classifier/logs/tensorboard
+  plots: D:\coding projects\mushroom_classifier/plots
+feature_processing:
+  one_hot_encode: true
+data:
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+dataloader:
+  batch_size: 128
+  num_workers: 4
+  pin_memory: true
+architecture: mlp
+num_classes: 2
+input_size: 117
+hidden_sizes:
+- 256
+- 128
+- 64
+dropout_rate: 0.3
+optimizer:
+  name: adam
+  lr: 0.001
+  weight_decay: 0.0001
+scheduler:
+  name: reduce_on_plateau
+  factor: 0.5
+  patience: 5
+  min_lr: 1.0e-05
+early_stopping:
+  monitor: val_loss
+  patience: 10
+  mode: min
+checkpoint:
+  dirpath: D:\coding projects\mushroom_classifier/models/checkpoints
+  filename: mushroom_classifier-{epoch:02d}-{val_loss:.2f}
+  monitor: val_loss
+  mode: min
+  save_top_k: 3
+  save_last: true
+trainer:
+  max_epochs: 100
+  accelerator: auto
+  devices: 1
+  precision: 32
+  deterministic: true
+  gradient_clip_val: 0.5
+inference:
+  device: cpu
+  input: null
+  output: predictions.json
+  use_onnx: false
+seed: 42
+debug: false
+experiment:
+  name: mushroom-classifier
+  tags:
+    project: mushroom-classification
+    task: tabular-classification
